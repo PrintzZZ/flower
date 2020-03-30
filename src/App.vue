@@ -5,19 +5,19 @@
     <footer class="footer">
       <ul>
         <router-link to="/home" tag="li">
-          <span></span>
+          <span class="iconfont icon-shouye"></span>
           <p>首页</p>
         </router-link>
         <router-link to="/kind" tag="li">
-          <span></span>
+          <span class="iconfont icon-leimupinleifenleileibie"></span>
           <p>分类</p>
         </router-link>
         <router-link to="/cart" tag="li">
-          <span></span>
+          <span class="iconfont icon-gouwuche"></span>
           <p>购物车</p>
         </router-link>
         <router-link to="/user" tag="li">
-          <span></span>
+          <span class="iconfont icon-gerenzhongxin"></span>
           <p>个人中心</p>
         </router-link>
       </ul>
@@ -64,11 +64,14 @@ html, body, .container {
         @include align-items();
 
         &.router-link-active {
-          @include color(#f66)
+          @include color(#f66);
         }
         span {
+          @include font-size(0.24rem);
+          @include margin(-5px 0);
         }
         p {
+          @include font-size(0.10rem);
         }
       }
     }
