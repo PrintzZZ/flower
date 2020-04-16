@@ -12,6 +12,7 @@ export default {
   actions: {
     getBannerlist (context) {
       aixos.get('/banner').then(res => {
+        console.log(res.data.data)
         context.commit({
           type: 'changeBannerlist',
           data: res.data.data

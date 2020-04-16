@@ -13,7 +13,6 @@ body,
   @include rect(100%, 100%);
   background-color: #f5f5f9; //yad 改为#f5f5f9
 }
-
 .container {
   // 建议使用弹性盒布局
   @include flexbox();
@@ -26,7 +25,7 @@ body,
     @include flex-direction(column);
     .header {
       @include rect(100%, 0.44rem);
-      @include background-color(#f66);
+      @include background-color(#FD5B6A);
     }
     .content {
       @include flex();

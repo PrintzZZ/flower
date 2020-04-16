@@ -37,7 +37,7 @@
         @include justify-content();
         @include align-items();
         &.router-link-active{
-          color:#5199e8;
+          color:rgb(253,91,107);
         }
         span {
           @include font-size(0.24rem);

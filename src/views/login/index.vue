@@ -1,7 +1,17 @@
 <template>
   <div class="loginBox">
+    <header class="header">
+      <!-- <div class="title"> -->
+        <van-nav-bar
+          title="登录"
+          left-text="返回首页"
+          left-arrow
+          @click-left="onClickLeft"
+        />
+      <!-- </div> -->
+    </header>
     <div class="title" >
-      <i class="web-font">欢 迎 登 录</i>
+      <!-- <i class="web-font">欢 迎 登 录</i> -->
     </div>
     <div class="loginbox">
       <van-cell-group>
@@ -31,7 +41,7 @@
     <div class="register">
       <span class="left" @click="forget">忘记密码</span>
       |
-      <span class="right" @click="register">立即注册</span>
+      <span class="right" @click="register">去注册</span>
     </div>
     <div class="qqbox">
       <div @click="qqonclick" class="qq"><i class="iconfont icon-QQ"></i></div>
@@ -43,9 +53,9 @@
 <script>
 import Vue from 'vue'
 import axios from '@/utils/request'
-import { Field, Button, CellGroup, Toast } from 'vant'
+import { Field, Button, CellGroup, Toast, NavBar } from 'vant'
 
-Vue.use(Field).use(Button).use(CellGroup).use(Toast)
+Vue.use(Field).use(Button).use(CellGroup).use(Toast).use(NavBar)
 export default {
   data () {
     return {
@@ -54,6 +64,10 @@ export default {
     }
   },
   methods: {
+    onClickLeft () {
+      // Toast('返回')
+      this.$router.push('/')
+    },
     register () {
       this.$router.push('/register')
     },
@@ -136,15 +150,31 @@ export default {
 @import '@/lib/reset.scss';
 .loginBox{
   @include rect(100%,100%);
-  background:url("../.././lib/loginbg.png") no-repeat;
-  background-size: 100%;
+  // background:url("../.././lib/loginbg.png") no-repeat;
+  //渐变效果
+  background: #0299d8;
+  background: linear-gradient(45deg, #fc5c74 0%, #fc5ca7 33%, #fc5ccc 66%, #f56cba 100%);
+  background-size: 400%;
+  background-position: 0% 100%;
+  animation: gradient 7.5s ease-in-out infinite;
+  .van-nav-bar__text{
+  color: #323233;
+  }
+  .van-nav-bar .van-icon{
+    color: #323233;
+  }
   .title{
-    margin-top: .8rem;
+    @include rect(30%,1.5rem);
+    margin: 0 auto;
+    margin-top: .5rem;
     color: #fff;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
     text-shadow: 1px 1px 8px #2229;
+    // background-color: #fff;
+    background:url("../.././lib/logo2.png") no-repeat;
+    background-size: 100%;
   }
   .loginbox{
     @include rect(80%,auto);
@@ -152,6 +182,7 @@ export default {
     background-color: #fff;
     box-shadow: 1px 1px 20px 0px #0b00f626;
     margin:.5rem auto;
+    margin-top: .2rem;
     padding: 10px;
     padding-top: 20px;
     position: relative;
@@ -172,18 +203,27 @@ export default {
       box-shadow: 0px 2px 4px 0px #4f4f4f8c;
     }
     .login{
-      background-image: linear-gradient(to top, #6379f5 0%, #1748fa 100%);
+      background: linear-gradient(45deg, #fc5c74 0%, #fc5ca7 33%, #fc5ccc 66%, #be6cf5 100%);
+      background-size: 400%;
+      background-position: 0% 100%;
+      animation: gradient 5s ease-in-out infinite;
     }
     .register{
-      background-color: rgb(255, 84, 17);
+      background-color: #fe66b1;
     }
   }
 }
+@keyframes gradient {
+    50% {
+      background-position: 100% 0
+    }
+  }
 .register{
   @include flexbox();
   @include justify-content();
+  color: #fff;
   span {
-    color: #1748fa;
+    color: #fff;
   }
   .right{
     margin-left: 5px;
@@ -205,17 +245,17 @@ export default {
     background-color: rgb(46, 21, 21);
     i{
       font-size: 20px;
-      color: #fff;
+      color: #fa628a;
     }
   }
-  .qq{
-    background-color: #2399f2;
+   .qq{
+    background-color: #ffffff;
   }
   .weixin{
-    background-color: #3bb92b;
+    background-color: #ffffff;
   }
   .weibo{
-    background-color: #ed496a;
+    background-color: #ffffff;
   }
 }
 </style>

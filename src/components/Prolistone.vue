@@ -6,7 +6,10 @@
           <img :src="item.proimg" alt="">
         </div>
         <div class="infocont">
-          <p class="infoname">{{ item.proname }}</p>
+          <p class="infoname">
+            <van-tag type="danger">{{ item.breed }}</van-tag>
+            <span>{{ item.proname }}</span>
+          </p>
           <p class="infomat">{{ "材料:" + item.material }}</p>
           <p class="infomoney">
             <span class="tips"><i>￥</i> {{ item.price }}.00</span>
@@ -22,10 +25,10 @@
 import Vue from 'vue'
 import axios from '@/utils/request'
 import {
-  Toast
+  Toast, Tag
 } from 'vant'
 
-Vue.use(Toast)
+Vue.use(Toast).use(Tag)
 export default {
   props: ['prolistone'],
   methods: {
@@ -51,23 +54,27 @@ export default {
 .prolistone {
   li{
     box-shadow: 1px 1px 2px #d6c1c12d;
-    @include margin( .1rem auto);
+    @include margin( .08rem auto);
     @include rect(100%,90%);
     background-color: rgb(255, 255, 255);
     .flowerinfo {
       @include rect(100%,auto);
       @include flexbox();
       @include align-items();
-      justify-content:space-between;
+      // justify-content:space-between;
       // background-color: rgba(255, 255, 255, 0.616);
       .infoimg{
-        @include rect(40%,1.5rem);
+        @include rect(40%,1.2rem);
         line-height: 1.5rem;
         text-align: center;
         border-radius: .05rem;
         overflow: hidden;
         img{
-          height:80%;
+          height:100%;
+          display: block;
+          margin: 0 auto;
+          border: 2px #fd5a6533 solid;
+          border-radius: 5px;
         }
       }
       .infocont{
@@ -80,16 +87,23 @@ export default {
           margin-top: .05rem;
         }
         .infoname {
+          .van-tag--danger {
+            display: inline-block;
+            margin-right: 10px;
+            vertical-align: middle;
+          }
+          span {
+            display: inline-block;
+          }
           color: #333;
           font-size: 16px;
         }
         .infomat {
-          color: #333;
-          width: 80%;
+          width: 100%;
           font-size: 0.12rem;
           // height: .32rem;
           // line-height: .16rem;
-          color: #ccc;
+          color: #999;
           // @include overflow();
         }
         .infomoney{

@@ -1,18 +1,21 @@
 <template>
   <div class="box">
-    <header class="header">
-      <van-nav-bar
+    <header class="header" id="home-header">
+      <!-- <van-nav-bar
         title="首页"
         @click-right="onClickRight"
-      />
+      /> -->
+      <van-search v-model="value" disabled  placeholder="请输入搜索关键词" />
     </header>
     <div class="content" ref="content" id="content" v-focus>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
+        <!-- 轮播图 -->
         <van-swipe :autoplay="3000" indicator-color="white">
           <van-swipe-item v-for="item of bannerlist" :key="item.bannerid">
             <img :src="item.img" alt="">
           </van-swipe-item>
         </van-swipe>
+        <!-- 轮播图结束 -->
         <van-grid :column-num="3">
           <van-grid-item icon="discount" to="/pro-list?index=0" text="限时特惠" clickable="true">
           </van-grid-item >
@@ -34,27 +37,18 @@
           @load="onLoad"
         >
           <div class="homeList" >
+            <!-- 优惠banner -->
             <div class="listTitle">
-              <div class="titTop">
-                <div>
-                  <img src="https://img.zhichiwangluo.com/zcimgdir/album/file_5b725daedef81.png">
-                </div>
-                <div class="text">
-                浪漫七夕特惠
-                </div>
-                <div>
-                  <img src="https://img.zhichiwangluo.com/zcimgdir/album/file_5c665c9a15504.png">
-                </div>
+              <div class="imgbox animated bounce" >
+                <img src="../../lib/youhui.png" alt="">
               </div>
-              <div class="titButton">PREFERENTIAL</div>
+              <!-- <van-count-down millisecond :time="time" format="HH:mm:ss:SS" class="animated bounce"/> -->
             </div>
+            <!-- 优惠banner结束 -->
             <div class="listContent">
               <div class="flowerbox">
                 <Prolistone :prolistone="prolistone"/>
               </div>
-              <!-- <div class="listFooter"> // yad 注释
-                <van-button plain type="info" color="rgb(233, 102, 222)" to="/pro-list" >查看更多</van-button>
-              </div> -->
             </div>
           </div>
           <div class="homeList" >
@@ -90,8 +84,8 @@ import Vue from 'vue'
 import Prolisttwo from '@/components/Prolisttwo.vue'
 import Prolistone from '@/components/Prolistone.vue'
 import { mapState } from 'vuex'
-import { NavBar, Toast, Swipe, SwipeItem, PullRefresh, Grid, GridItem, Card, Icon, List, Button } from 'vant'
-Vue.use(NavBar).use(Swipe).use(SwipeItem).use(Toast).use(PullRefresh).use(Grid).use(GridItem).use(Card).use(Icon).use(List).use(Button)
+import { NavBar, Toast, Swipe, SwipeItem, PullRefresh, Grid, GridItem, Card, Icon, List, Button, Search, CountDown } from 'vant'
+Vue.use(NavBar).use(Swipe).use(SwipeItem).use(Toast).use(PullRefresh).use(Grid).use(GridItem).use(Card).use(Icon).use(List).use(Button).use(Search).use(CountDown)
 export default {
   components: {
     Prolisttwo,
@@ -104,7 +98,9 @@ export default {
       loading: false,
       finished: false,
       homeList: [],
-      topflag: false
+      topflag: false,
+      value: '', // 搜索框
+      time: 30 * 60 * 60 * 1000 // 倒计时
     }
   },
   computed: {
@@ -181,6 +177,25 @@ export default {
 </script>
 <style lang="scss">
 @import '@/lib/reset.scss';
+.box {
+  #home-header{
+    @include rect(100%,auto);
+    // margin-bottom: .2rem;
+    // position: relative;
+    .van-search {
+      // @include rect(80%,.35rem);
+      // margin: 0 auto;
+      // position: absolute;
+      // top: .82rem;
+      // left: 50%;
+      // transform: translateX(-50%);
+      // border-radius: .1rem;
+      .van-cell--borderless{
+        border-radius: .1rem;
+      }
+    }
+  }
+}
 .van-swipe {
   @include margin(0 .05rem);
   height: 180px;
@@ -197,20 +212,26 @@ export default {
 .homeList {
   .listTitle {
     @include flexbox();
-    @include rect(auto,0.8rem);
+    @include rect(auto,1rem);
     @include flex-direction(column);
     @include justify-content();
     @include align-items();
-    // @include background-color(#f7f7f7);
-    .titTop {
-      @include align-items();
-      @include flexbox();
-      @include font-weight(bold);
-      @include font-size(16px);
-      @include color(rgb(102,102,102));
+    background-color: #fff;
+    padding: 0 .05rem;
+      position: relative;
+    .imgbox {
       img {
-        width: 0.5rem;
-      }
+          @include rect(100%, auto);
+          display: block;
+          margin: 0 auto;
+        }
+    }
+    .van-count-down {
+      position: absolute;
+      z-index: 999999;
+      top: 70%;
+      right: 15%;
+      color: #fff;
     }
   }
   .listContent {

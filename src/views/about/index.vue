@@ -10,34 +10,13 @@
     </header>
     <div class="content">
       <van-collapse v-model="activeName" accordion>
-        <van-collapse-item title="陶长俊" name="1">
-          主要负责分类页面和详情页面<br>
-          1:分类页面和详情页面的渲染<br>
-          2:商品的评论<br>
-          3:相应部分接口的编写<br>
-          4:每天负责合并代码<br>
+        <van-collapse-item title="1" name="1">
         </van-collapse-item>
-        <van-collapse-item title="袁傲迪" name="2">
-          主要负责个人中心页面<br>
-          1:注册、登录<br>
-          2:个人信息修改（昵称 性别 生日<br>
-          3:头像上传,更换头像<br>
-          4:收货地址 增删查改及默认地址<br>
-          5:订单分类、生成订单（优惠券)<br>
-          6:相应部分接口的编写<br>
+        <van-collapse-item title="2" name="2">
         </van-collapse-item>
-        <van-collapse-item title="施嘉伟" name="3">
-          主要负责首页<br>
-          1:首页面的渲染<br>
-          2:页面商品的搜索功能<br>
-          3:相应部分接口的编写<br>
-          4:确认订单<br>
+        <van-collapse-item title="3" name="3">
         </van-collapse-item>
-        <van-collapse-item title="郭泓良" name="4">
-          主要负责购物车页面<br>
-          1:购物车页面的数据的渲染<br>
-          2:购物车页面数量的加减、全选等功能<br>
-          3:数据的收集<br>
+        <van-collapse-item title="4" name="4">
         </van-collapse-item>
       </van-collapse>
 
@@ -69,6 +48,12 @@ export default {
 
 <style lang="scss">
 @import '@/lib/reset.scss';
+.van-nav-bar__text{
+  color: #323233;
+}
+.van-nav-bar .van-icon{
+  color: #323233;
+}
 .content {
   .van-cell {
     font-size: 14px; // yad 18改为14

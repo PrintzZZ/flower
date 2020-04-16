@@ -83,16 +83,14 @@ const routes = [
     path: '/login',
     name: 'login',
     components: {
-      default: () => import('@/views/login/index.vue'),
-      footer: Footer
+      default: () => import('@/views/login/index.vue')
     }
   },
   {
     path: '/register',
     name: 'register',
     components: {
-      default: () => import('@/views/register/index.vue'),
-      footer: Footer
+      default: () => import('@/views/register/index.vue')
     }
   },
   {

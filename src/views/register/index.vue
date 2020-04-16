@@ -1,7 +1,12 @@
 <template>
   <div class="registerBox">
+    <header class="header">
+      <!-- <div class="title"> -->
+      <van-nav-bar title="注册" left-text="返回" left-arrow @click-left="onClickLeft" />
+      <!-- </div> -->
+    </header>
     <div class="title">
-      <i class="web-font">用 户 注 册</i>
+      <!-- <i class="web-font">用 户 注 册</i> -->
     </div>
     <div class="loginbox">
       <van-cell-group>
@@ -13,12 +18,7 @@
           right-icon="question-o"
           @click-right-icon="$toast('长度大于2位')"
         />
-        <van-field
-          v-model="tel"
-          clearable
-          label="手机号"
-          placeholder="请输入手机号"
-        />
+        <van-field v-model="tel" clearable label="手机号" placeholder="请输入手机号" />
         <van-field
           v-model="password"
           type="password"
@@ -39,18 +39,28 @@
       <span class="right" @click="login">已有账号</span>
     </div>
     <div class="qqbox">
-      <div @click="qqonclick" class="qq"><i class="iconfont icon-QQ"></i></div>
-      <div @click="qqonclick" class="weixin"><i class="iconfont icon-weixin"></i></div>
-      <div @click="qqonclick" class="weibo"><i class="iconfont icon-weibo"></i></div>
+      <div @click="qqonclick" class="qq">
+        <i class="iconfont icon-QQ"></i>
+      </div>
+      <div @click="qqonclick" class="weixin">
+        <i class="iconfont icon-weixin"></i>
+      </div>
+      <div @click="qqonclick" class="weibo">
+        <i class="iconfont icon-weibo"></i>
+      </div>
     </div>
   </div>
 </template>
 <script>
 import axios from '@/utils/request'
 import Vue from 'vue'
-import { Field, Button, CellGroup, Toast } from 'vant'
+import { Field, Button, CellGroup, Toast, NavBar } from 'vant'
 
-Vue.use(Field).use(Button).use(CellGroup).use(Toast)
+Vue.use(Field)
+  .use(Button)
+  .use(CellGroup)
+  .use(Toast)
+  .use(NavBar)
 export default {
   data () {
     return {
@@ -60,6 +70,10 @@ export default {
     }
   },
   methods: {
+    onClickLeft () {
+      // Toast('返回')
+      this.$router.back()
+    },
     login () {
       this.$router.push('/login')
     },
@@ -67,55 +81,52 @@ export default {
       Toast.setDefaultOptions({ duration: 800 })
       if (this.username === '') {
         Toast('用户名不能为空')
-      } else
-      if (this.username.length < 2) {
+      } else if (this.username.length < 2) {
         Toast('用户名不合法')
-      } else
-      if (this.tel === '') {
+      } else if (this.tel === '') {
         Toast('手机号不能为空')
-      } else
-      if (this.tel.length !== 11) {
+      } else if (this.tel.length !== 11) {
         Toast('手机号不合法')
-      } else
-      if (this.password === '') {
+      } else if (this.password === '') {
         Toast('密码不能为空')
-      } else
-      if (this.password.length < 6) {
+      } else if (this.password.length < 6) {
         Toast('密码不合法')
       } else {
-        axios.post('/users/register', {
-          username: this.username,
-          tel: this.tel,
-          password: this.password
-        }).then(res => {
-          // |10001|注册成功|
-          // |10002|用户已存在,请直接登录|
-          console.log(res)
-          if (res.data.code === 10001) {
-            localStorage.setItem('userid', res.data.data.userid)
-            localStorage.setItem('tel', this.tel)
-            const toast = Toast.loading({
-              duration: 0, // 持续展示 toast
-              forbidClick: true,
-              message: '注册成功,正在跳转登录...'
-            })
+        axios
+          .post('/users/register', {
+            username: this.username,
+            tel: this.tel,
+            password: this.password
+          })
+          .then(res => {
+            // |10001|注册成功|
+            // |10002|用户已存在,请直接登录|
+            console.log(res)
+            if (res.data.code === 10001) {
+              localStorage.setItem('userid', res.data.data.userid)
+              localStorage.setItem('tel', this.tel)
+              const toast = Toast.loading({
+                duration: 0, // 持续展示 toast
+                forbidClick: true,
+                message: '注册成功,正在跳转登录...'
+              })
 
-            let second = 2
-            const timer = setInterval(() => {
-              second--
-              if (second) {
-                toast.message = `注册成功,正在跳转登录..`
-              } else {
-                clearInterval(timer)
-                // 手动清除 Toast
-                Toast.clear()
-                this.$router.push('/login')
-              }
-            }, 1000)
-          } else {
-            Toast('用户已存在,请直接登录')
-          }
-        })
+              let second = 2
+              const timer = setInterval(() => {
+                second--
+                if (second) {
+                  toast.message = `注册成功,正在跳转登录..`
+                } else {
+                  clearInterval(timer)
+                  // 手动清除 Toast
+                  Toast.clear()
+                  this.$router.push('/login')
+                }
+              }, 1000)
+            } else {
+              Toast('用户已存在,请直接登录')
+            }
+          })
       }
     },
     forget () {
@@ -134,36 +145,61 @@ export default {
 }
 </script>
 <style lang="scss">
-@import '@/lib/reset.scss';
-.registerBox{
-  @include rect(100%,100%);
-  background:url("../.././lib/loginbg.png") no-repeat;
-  background-size: 100%;
-  .title{
-    margin-top: .8rem;
+@import "@/lib/reset.scss";
+
+.registerBox {
+  @include rect(100%, 100%);
+  // background:url("../.././lib/loginbg.png") no-repeat;
+  // 渐变效果
+  background: #0299d8;
+  background: linear-gradient(
+    45deg,
+    #fc5c74 0%,
+    #fc5ca7 33%,
+    #fc5ccc 66%,
+    #f56cba 100%
+  );
+  background-size: 400%;
+  background-position: 0% 100%;
+  animation: gradient 7.5s ease-in-out infinite;
+  // background-size: 100%;
+  .van-nav-bar__text {
+    color: #323233;
+  }
+  .van-nav-bar .van-icon {
+    color: #323233;
+  }
+  .title {
+    @include rect(30%, 1.5rem);
+    margin: 0 auto;
+    margin-top: 0.5rem;
     color: #fff;
     font-size: 30px;
     font-weight: bold;
     text-align: center;
     text-shadow: 1px 1px 8px #2229;
+    // background-color: #fff;
+    background: url("../.././lib/logo2.png") no-repeat;
+    background-size: 100%;
   }
-  .loginbox{
-    @include rect(80%,auto);
+  .loginbox {
+    @include rect(80%, auto);
     border-radius: 10px;
     background-color: #fff;
     box-shadow: 1px 1px 20px 0px #0b00f626;
-    margin:.5rem auto;
+    margin: 0.5rem auto;
+    margin-top: 0.2rem;
     padding: 10px;
     padding-top: 20px;
     position: relative;
   }
-  .btnbox{
+  .btnbox {
     @include margin(22px 0);
     @include flexbox();
     @include justify-content();
     color: #fff;
     .btn {
-      @include rect(85%,.44rem);
+      @include rect(85%, 0.44rem);
       border-radius: 25px;
       display: block;
       border: 0;
@@ -172,51 +208,66 @@ export default {
       top: 180px;
       box-shadow: 0px 2px 4px 0px #530a0a8c;
     }
-    .login{
-      background-image: linear-gradient(to top, #6379f5 0%, #1748fa 100%);
+    .register {
+      background: linear-gradient(
+        145deg,
+        #be6cf5 0%,
+        #fc5ca7 33%,
+        #fc5ccc 66%,
+        #fc5c74 100%
+      );
+      background-size: 400%;
+      background-position: 0% 100%;
+      animation: gradient 5s ease-in-out infinite;
     }
-    .register{
-      background-color: rgb(255, 84, 17);
+    .login {
+      background-color: #fe66b1;
     }
   }
 }
-.register{
+@keyframes gradient {
+  50% {
+    background-position: 100% 0;
+  }
+}
+.register {
   @include flexbox();
   @include justify-content();
+  color: #fff;
   span {
-    color: #1748fa;
+    color: #ffffff;
   }
-  .right{
+  .right {
     margin-left: 5px;
   }
-  .left{
+  .left {
     margin-right: 5px;
   }
 }
-.qqbox{
+.qqbox {
   margin-top: 50px;
   @include flexbox();
   @include justify-content();
-  div{
-    @include rect(.4rem,.4rem);
+  div {
+    @include rect(0.4rem, 0.4rem);
     text-align: center;
-    line-height: .4rem;
+    line-height: 0.4rem;
     margin: 0 20px;
     border-radius: 50%;
     background-color: rgb(46, 21, 21);
-    i{
-      font-size: 20px;
-      color: #fff;
+    i {
+      font-size: 25px;
+      color: #fa628a;
     }
   }
-  .qq{
-    background-color: #2399f2;
+  .qq {
+    background-color: #ffffff;
   }
-  .weixin{
-    background-color: #3bb92b;
+  .weixin {
+    background-color: #ffffff;
   }
-  .weibo{
-    background-color: #ed496a;
+  .weibo {
+    background-color: #ffffff;
   }
 }
 </style>

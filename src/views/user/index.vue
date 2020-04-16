@@ -362,7 +362,10 @@ body{
     border: 0;
     margin: .2rem auto;
     color: #fff;
-    background-image: linear-gradient(to top, #6379f5 0%, #1748fa 100%);
     box-shadow: 0px 2px 4px 0px #4f4f4f8c;
+    background: linear-gradient(45deg, #fc5c74 0%, #fc5ca7 33%, #fc5ccc 66%, #be6cf5 100%);
+    background-size: 400%;
+    background-position: 0% 100%;
+    animation: gradient 5s ease-in-out infinite;
     }
 </style>
