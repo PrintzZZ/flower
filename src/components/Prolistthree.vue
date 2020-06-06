@@ -1,16 +1,13 @@
 <template>
-  <ul class="prolistone">
-    <router-link tag="li" :to="'/detail?proid=' + item.proid" v-for="item of prolistone" :key="item.proid" >
+  <ul class="prolisttwo">
+    <router-link class="threeli" tag="li" :to="'/detail?proid=' + item.proid" v-for="item of prolisttwo" :key="item.proid">
       <div class="flowerinfo">
         <div class="infoimg">
           <img :src="item.proimg" alt="">
         </div>
         <div class="infocont">
-          <p class="infoname">
-            <van-tag type="danger">{{ item.breed }}</van-tag>
-            <span>{{ item.proname }}</span>
-          </p>
-          <p class="infomat">{{ "材料:" + item.material }}</p>
+          <p class="infoname"><van-tag type="danger">{{ item.breed }}</van-tag>{{ item.proname }}</p>
+          <p class="infomat">{{ item.material }}</p>
           <p class="infomoney">
             <span class="tips"><i>￥</i> {{ item.price }}.00</span>
             <span @click="addCart(item.proid)" class="iconfont icon-gouwuche" @click.stop></span>
@@ -30,7 +27,7 @@ import {
 
 Vue.use(Toast).use(Tag)
 export default {
-  props: ['prolistone'],
+  props: ['prolisttwo'],
   methods: {
     addCart (proid) {
       let userid = localStorage.getItem('userid')
@@ -51,61 +48,62 @@ export default {
 
 <style lang="scss">
 @import "@/lib/reset.scss";
-.prolistone {
-  li{
+
+.prolisttwo {
+  @include flexbox();
+  // @include align-items();
+  @include rect(100%,90%);
+  flex-wrap:wrap;
+  // justify-content:flex-start;
+  .threeli {
     box-shadow: 1px 1px 2px #d6c1c12d;
-    @include margin( .08rem auto);
-    @include rect(100%,90%);
+    @include margin( .03rem);
+    @include rect(48%,auto);
+    @include flexbox();
     background-color: rgb(255, 255, 255);
     .flowerinfo {
       @include rect(100%,auto);
       @include flexbox();
+      flex-direction: column;
       @include align-items();
       // justify-content:space-between;
-      // background-color: rgba(255, 255, 255, 0.616);
+      // @include justify-content();
+      background-color: rgb(255, 255, 255);
+      overflow: hidden;
       .infoimg{
-        @include rect(auto,1.3rem);
+        @include rect(100%,auto);
         line-height: 1.5rem;
         text-align: center;
-        border-radius: .05rem;
         overflow: hidden;
-        margin-right: .1rem;
         img{
-          height:100%;
-          display: block;
-          margin: 0 auto;
-          // border: 2px #fd5a6533 solid;
-          border-radius: 5px;
+          border-radius: 3px;
+          // overflow: hidden;
+          @include rect(90%,auto);
         }
       }
       .infocont{
         @include flexbox();
         flex-direction: column;
-        @include rect(50%,1.2rem);
-        @include justify-content();
-        margin-right: 10px;
+        @include rect(90%,1.3rem);
+        // margin-right: 10px;
+        justify-content:space-between;
+        padding: 10px;
         p {
-          margin-top: .05rem;
+          margin-top: 5px;
+          .van-tag--danger {
+            margin-right: .1rem;
+            background-color: #ee5c0a;
+          }
         }
         .infoname {
-          .van-tag--danger {
-            display: inline-block;
-            margin-right: 10px;
-            vertical-align: middle;
-          }
-          span {
-            display: inline-block;
-          }
-          color: #333;
+          color: rgb(0, 0, 0);
           font-size: 16px;
         }
         .infomat {
-          width: 100%;
+          color: #333;
           font-size: 0.12rem;
-          // height: .32rem;
-          // line-height: .16rem;
-          color: #999;
-          // @include overflow();
+          color: #ccc;
+          @include overflow();
         }
         .infomoney{
           font-size: 20px;
@@ -125,5 +123,9 @@ export default {
       }
     }
   }
+}
+.prolisttwo:after {
+  content: "";
+  flex: auto;
 }
 </style>

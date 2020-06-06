@@ -42,7 +42,7 @@
       </div>
 
       <div v-else   class="shoopingcart-img">
-        <img src="http://cdn.jisuapp.cn/static/webapp/images/xcx-goods/shopping-cart-null.png" alt="">
+        <img src="https://images.cnblogs.com/cnblogs_com/yad123/1536547/t_200518093927shopping-cart-null.png" alt="">
         <p>购物车空空如也</p><router-link class="toshopping" to="/kind">去购物</router-link>
       </div>
     </div>

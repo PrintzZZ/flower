@@ -39,7 +39,7 @@
 import Vue from 'vue'
 import axios from '@/utils/request'
 import { NavBar, Search } from 'vant'
-import Prolisttwo from '@/components/Prolisttwo.vue'
+import Prolisttwo from '@/components/Prolistthree.vue'
 Vue.use(NavBar).use(Search)
 export default {
   components: {
@@ -56,6 +56,7 @@ export default {
     }
   },
   created () {
+    console.log(this.prolisttwo)
     let getIndex = parseInt(this.$router.currentRoute.query.index)
     let url = '/pro/type?type=type'
     axios.get(url).then(res => {
@@ -102,7 +103,7 @@ export default {
     },
     onSearch () {
       axios.get('/pro/search?text=' + this.value).then(res => {
-        console.log(res.data)
+        console.log('搜索结果' + res.data)
         console.log(this.value)
         this.prolisttwo = res.data.data
       })

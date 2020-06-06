@@ -12,7 +12,7 @@ export default {
   actions: {
     getBannerlist (context) {
       aixos.get('/banner').then(res => {
-        console.log(res.data.data)
+        // console.log(res.data.data)
         context.commit({
           type: 'changeBannerlist',
           data: res.data.data
@@ -38,7 +38,8 @@ export default {
       })
     },
     getProlisttwo (context) {
-      let url = '/pro/brandcategory?type=节日专区'
+      // let url = '/pro/brandcategory?type=节日专区'
+      let url = '/pro?pageCode=1&limitNum=4'
       return new Promise(resolve => {
         aixos.get(url).then(res => {
           // console.log(res.data)

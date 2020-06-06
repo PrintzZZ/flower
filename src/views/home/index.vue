@@ -5,7 +5,7 @@
         title="首页"
         @click-right="onClickRight"
       /> -->
-      <van-search v-model="value" disabled  placeholder="请输入搜索关键词" />
+      <van-search v-model="value" disabled  placeholder="请输入搜索关键词" @click="searchbtn"/>
     </header>
     <div class="content" ref="content" id="content" v-focus>
       <van-pull-refresh v-model="isLoading" @refresh="onRefresh">
@@ -16,32 +16,46 @@
           </van-swipe-item>
         </van-swipe>
         <!-- 轮播图结束 -->
+        <!-- 九宫格 -->
         <van-grid :column-num="3">
-          <van-grid-item icon="discount" to="/pro-list?index=0" text="限时特惠" clickable="true">
+          <!-- <van-grid-item icon="discount" to="/pro-list?index=0" text="限时特惠" clickable="true"> -->
+          <van-grid-item to="/pro-list?index=0" clickable="true">
+            <img src="../../lib/gg_yh.gif" alt="">
+            <p>限时特惠</p>
           </van-grid-item >
-          <van-grid-item icon="point-gift-o" to="/pro-list?index=6" text="送长辈">
+          <van-grid-item to="/pro-list?index=6">
+            <img src="../../lib/gg_slr.gif" alt="">
+            <p>送长辈</p>
           </van-grid-item>
           <van-grid-item icon="like-o" to="/pro-list?index=5" text="送爱人">
+            <img src="../../lib/gg_sar.gif" alt="">
+            <p>送爱人</p>
           </van-grid-item>
           <van-grid-item icon="goods-collect-o" to="/pro-list?index=1" text="新品专区">
+            <img src="../../lib/gg_xp.gif" alt="">
+            <p>新品专区</p>
           </van-grid-item >
           <van-grid-item icon="bill-o" to="/coupons" text="优惠券">
+            <img src="../../lib/gg_yhq.gif" alt="">
+            <p>优惠券</p>
           </van-grid-item>
           <van-grid-item icon="diamond-o" to="/vipcard" text="会员卡">
+            <img src="../../lib/gg_hy.gif" alt="">
+            <p>会员卡</p>
           </van-grid-item>
         </van-grid>
-        <van-list
+        <!-- 九宫格结束 -->
+        <!-- <van-list
           v-model="loading"
           :finished="finished"
           finished-text="没有更多了"
-          @load="onLoad"
-        >
+        > -->
           <div class="homeList" >
             <!-- 优惠banner -->
             <div class="listTitle">
-              <div class="imgbox animated bounce" >
-                <img src="../../lib/youhui.png" alt="">
-              </div>
+              <!-- <div class="imgbox animated bounce" > -->
+                <img src="../../lib/home_yh.gif" alt="">
+              <!-- </div> -->
               <!-- <van-count-down millisecond :time="time" format="HH:mm:ss:SS" class="animated bounce"/> -->
             </div>
             <!-- 优惠banner结束 -->
@@ -58,13 +72,13 @@
                   <img src="https://img.zhichiwangluo.com/zcimgdir/album/file_5b725daedef81.png">
                 </div>
                 <div class="text">
-                节日专区
+                更多选择
                 </div>
                 <div>
                   <img src="https://img.zhichiwangluo.com/zcimgdir/album/file_5c665c9a15504.png">
                 </div>
               </div>
-              <div class="titButton">FESTIVALS</div>
+              <div class="titButton">More Choose</div>
             </div>
             <div class="listContent">
               <div class="flowerbox">
@@ -72,7 +86,7 @@
               </div>
             </div>
           </div>
-        </van-list>
+        <!-- </van-list> -->
       </van-pull-refresh>
       <van-icon @click="onbacktop" v-show="topflag" class="backtop" name="arrow-up" />
     </div>
@@ -96,9 +110,8 @@ export default {
       count: 0,
       isLoading: false,
       loading: false,
-      finished: false,
-      homeList: [],
-      topflag: false,
+      // finished: false,
+      topflag: false, // 是否触顶
       value: '', // 搜索框
       time: 30 * 60 * 60 * 1000 // 倒计时
     }
@@ -123,25 +136,9 @@ export default {
     }
   },
   methods: {
-    onClickLeft () {
-      this.$router.back()
-    },
-    onClickRight () {
-      Toast('点我干嘛？')
-    },
-    onLoad () {
-      setTimeout(() => {
-        for (let i = 0; i < 1; i++) {
-          console.log(this.homeList.length)
-          this.homeList.push(this.homeList.length + 1)
-        }
-        // 加载状态结束
-        this.loading = false
-        // 数据全部加载完成
-        if (this.homeList.length >= 2) {
-          this.finished = true
-        }
-      }, 500)
+    // 搜索跳转
+    searchbtn () {
+      this.$router.push('/pro-list?index=0')
     },
     onRefresh () {
       setTimeout(() => {
@@ -155,10 +152,10 @@ export default {
       let timer = setInterval(() => {
         scroll = Math.floor(scroll / 6)
         document.getElementById('content').scrollTop = scroll
-        console.log(scroll)
+        // console.log(scroll)
         if (scroll === 0) {
           clearInterval(timer)
-          console.log('scroll')
+          // console.log('scroll')
         }
       }, 30)
     },
@@ -208,6 +205,17 @@ export default {
   box-shadow: 1px 1px 2px #d6c1c12d;
   border-radius: .05rem;
   @include margin(.1rem .05rem);
+  .van-grid-item__content {
+    img {
+      width: 45%;
+    }
+    p {
+      color: #646566;
+      font-size: 12px;
+      word-wrap: break-word;
+      margin-top: 8px;
+    }
+  }
 }
 .homeList {
   .listTitle {
@@ -218,14 +226,22 @@ export default {
     @include align-items();
     background-color: #fff;
     padding: 0 .05rem;
-      position: relative;
-    .imgbox {
+    position: relative;
+    .titTop {
+      @include align-items();
+      @include flexbox();
+      @include font-weight(bold);
+      @include font-size(16px);
+      @include color(rgb(102,102,102));
       img {
-          @include rect(100%, auto);
-          display: block;
-          margin: 0 auto;
-        }
+        width: 0.5rem;
+      }
     }
+    img {
+        @include rect(100%, auto);
+        display: block;
+        margin: 0 auto;
+      }
     .van-count-down {
       position: absolute;
       z-index: 999999;
@@ -257,6 +273,11 @@ export default {
   position: fixed;
   bottom: 96px;
   right: 10px;
-  font-size: 30px;
+  font-size: 20px;
+  background-color: rgb(255, 255, 255);
+  border-radius: 50%;
+  padding: 5px;
+  border: 1px solid #999;
+  color: #666;
 }
 </style>

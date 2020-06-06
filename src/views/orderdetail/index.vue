@@ -94,7 +94,7 @@ export default {
       isPay: true,
       show: false,
       // time: [],
-      status: 0,
+      status: 0, // 订单是否付款
       time: {}
     }
   },
@@ -116,7 +116,7 @@ export default {
         if (item.orderid === this.orderid) {
           console.log(item)
           this.orderlist = item.list
-          // this.status = item.status
+          this.status = item.status
           // this.time = item.time
           // console.log(item)
           this.time = item.time[0]

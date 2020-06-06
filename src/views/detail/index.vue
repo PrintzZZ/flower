@@ -185,7 +185,7 @@ export default {
       // value: 0,
       commentlist: [],
       headimg: '', // 头像
-      taozi: false,
+      taozi: false, // 评论区控制
       show: false, // 是否展示弹出层
       active: 0 // 默认是商品详情
     }
@@ -201,20 +201,22 @@ export default {
       this.note = res.data.data.note
       this.proname = res.data.data.proname
     })
-    console.log(this.proid)
+    // console.log(this.proid)
     axios.get('/comment?proid=' + proid).then(res => {
+      console.log(res.data.data)
       this.commentlist = res.data.data
-      const length = this.commentlist.length
-      if (length === 0) {
-        this.taozi = false
+      const length = -1 || this.commentlist.length
+      if (length === -1) {
+        this.taozi = true
       } else {
         this.taozi = true
       }
+      console.log(this.taozi)
     })
     // 头像
     let userid = localStorage.getItem('userid')
     axios.post('/headimg/getimg', { userid: userid }).then(res => {
-      console.log(res.data)
+      // console.log(res.data)
       if (res.data.code !== 10119) {
         if (res.data.data.length) {
           this.headimg = res.data.data[0].file
@@ -226,7 +228,7 @@ export default {
   },
   methods: {
     buynow () {
-      console.log(1230)
+      // console.log(1230)
       // 订单时间
       var t = new Date()
       let time = [{
@@ -258,8 +260,18 @@ export default {
         userid: userid,
         time: time
       }).then(res => {
-        console.log(res)
-        this.$router.push('/pay?orderid=' + res.data.data.orderid)
+        // console.log('生成订单' + res)
+        let tokenNum = JSON.parse(JSON.stringify(res)).data.code
+        if (tokenNum === 10119) {
+          console.log('请登录')
+          Toast({
+            message: '您还没有登录',
+            duration: 1000
+          })
+        } else {
+          console.log('下单')
+          this.$router.push('/pay?orderid=' + res.data.data.orderid)
+        }
       })
     },
     getmassage () {
